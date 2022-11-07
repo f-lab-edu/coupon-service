@@ -1,11 +1,13 @@
 package com.rumor.flab.coupon.domain;
 
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 @NoArgsConstructor
+@ToString
 public class Coupon {
     private Long id;
     private Long owner;
@@ -35,4 +37,6 @@ public class Coupon {
     public int hashCode() {
         return Objects.hash(id, owner, name, image, created, updated);
     }
+
+
 }
