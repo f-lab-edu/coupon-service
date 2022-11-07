@@ -1,9 +1,8 @@
 package com.rumor.flab.coupon.application.port.out;
 
 import com.rumor.flab.coupon.domain.Coupon;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 
-public interface LoadCouponPort {
-    public List<Coupon> findAll();
+public interface LoadCouponPort extends JpaRepository<Coupon, Long> {
 }
