@@ -1,10 +1,10 @@
-package com.rumor.coupon;
+package com.rumor.flab;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CouponApplicationTests {
+class CouponControllerApplicationTests {
 
     @Test
     void contextLoads() {
