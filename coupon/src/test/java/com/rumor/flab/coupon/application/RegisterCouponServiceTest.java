@@ -1,5 +1,8 @@
 package com.rumor.flab.coupon.application;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rumor.flab.coupon.adapter.in.web.ResponseCoupon;
+import com.rumor.flab.coupon.adapter.out.persistence.CouponRepository;
 import com.rumor.flab.coupon.domain.Coupon;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,14 +19,17 @@ class RegisterCouponServiceTest {
     @Autowired
     private RegisterCouponService registerCouponService;
     @Autowired
-    private GetCouponService getCouponService;
+    private CouponRepository couponRepository;
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
     void registerCoupon() {
         Coupon coupon = new Coupon(1L, 1L, "커피쿠폰", "", null, null);
         registerCouponService.registerCoupon(coupon);
 
-        List<Coupon> coupons = getCouponService.getCoupons();
-        Assertions.assertThat(coupons.contains(coupon)).isTrue();
+        List<ResponseCoupon> coupons = couponRepository.findAll();
+        ResponseCoupon responseCoupon = objectMapper.convertValue(coupon, ResponseCoupon.class);
+        Assertions.assertThat(coupons.contains(responseCoupon)).isTrue();
     }
 }
