@@ -1,6 +1,5 @@
 package com.rumor.flab.coupon.adapter.in.web;
 
-import com.rumor.flab.coupon.domain.Coupon;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
