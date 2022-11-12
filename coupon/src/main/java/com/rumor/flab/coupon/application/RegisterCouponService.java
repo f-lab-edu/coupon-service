@@ -14,7 +14,7 @@ public class RegisterCouponService implements RegisterCouponUseCase {
     private final RegisterCouponPort registerCouponPort;
 
     @Override
-    public CouponEntity registerCoupon(Coupon coupon) {
+    public Coupon registerCoupon(Coupon coupon) {
         return registerCouponPort.registerCoupon(coupon);
     }
 }

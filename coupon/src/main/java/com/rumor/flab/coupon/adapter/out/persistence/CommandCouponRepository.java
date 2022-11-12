@@ -17,8 +17,9 @@ public class CommandCouponRepository implements RegisterCouponPort {
     private final ObjectMapper objectMapper;
 
     @Override
-    public CouponEntity registerCoupon(Coupon coupon) {
+    public Coupon registerCoupon(Coupon coupon) {
         CouponEntity couponEntity = objectMapper.convertValue(coupon, CouponEntity.class);
-        return couponSpringDataJpaRepository.save(couponEntity);
+        CouponEntity savedCoupon = couponSpringDataJpaRepository.save(couponEntity);
+        return objectMapper.convertValue(savedCoupon, Coupon.class);
     }
 }
