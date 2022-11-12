@@ -1,8 +1,7 @@
 package com.rumor.flab.coupon.adapter.out.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rumor.flab.coupon.application.port.out.RegisterCouponPort;
-import com.rumor.flab.coupon.domain.Coupon;
+import com.rumor.flab.coupon.adapter.in.web.ResponseCoupon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,9 +15,9 @@ public class CouponRepository {
     private final CouponSpringDataJpaRepository couponSpringDataJpaRepository;
     private final ObjectMapper objectMapper;
 
-    public List<Coupon> findAll() {
+    public List<ResponseCoupon> findAll() {
         return couponSpringDataJpaRepository.findAll().stream()
-                .map(couponEntity -> objectMapper.convertValue(couponEntity, Coupon.class))
+                .map(couponEntity -> objectMapper.convertValue(couponEntity, ResponseCoupon.class))
                 .collect(Collectors.toList());
     }
 }
