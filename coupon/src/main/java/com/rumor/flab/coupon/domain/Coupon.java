@@ -1,5 +1,6 @@
 package com.rumor.flab.coupon.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @NoArgsConstructor
+@EqualsAndHashCode
 @ToString
 public class Coupon {
     private Long id;
@@ -24,19 +26,4 @@ public class Coupon {
         this.created = created;
         this.updated = updated;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Coupon coupon = (Coupon) o;
-        return Objects.equals(id, coupon.id) && Objects.equals(owner, coupon.owner) && Objects.equals(name, coupon.name) && Objects.equals(image, coupon.image) && Objects.equals(created, coupon.created) && Objects.equals(updated, coupon.updated);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, owner, name, image, created, updated);
-    }
-
-
 }
