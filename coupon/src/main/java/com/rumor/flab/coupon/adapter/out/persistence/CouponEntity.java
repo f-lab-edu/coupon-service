@@ -1,6 +1,7 @@
 package com.rumor.flab.coupon.adapter.out.persistence;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Table(name = "coupon")
+@EqualsAndHashCode
 public class CouponEntity {
 
         @Id
