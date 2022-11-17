@@ -13,7 +13,7 @@ public class CommandCouponController {
     private final RegisterCouponService registerCouponService;
 
     @PostMapping("/coupon")
-    public String registerCoupon(Coupon coupon) {
+    public String registerCoupon(RequestCoupon coupon) {
         registerCouponService.registerCoupon(coupon);
         return "create";
     }
