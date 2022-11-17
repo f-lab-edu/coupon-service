@@ -1,36 +1,34 @@
 package com.rumor.flab.coupon.application;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rumor.flab.coupon.adapter.in.web.ResponseCoupon;
-import com.rumor.flab.coupon.adapter.out.persistence.CouponEntity;
-import com.rumor.flab.coupon.adapter.out.persistence.CouponRepository;
-import com.rumor.flab.coupon.domain.Coupon;
+import com.rumor.flab.coupon.adapter.in.web.RequestCoupon;
+import com.rumor.flab.coupon.adapter.in.web.enums.ImageGenerationType;
+import com.rumor.flab.coupon.application.factory.CouponAutoRegister;
+import com.rumor.flab.coupon.application.factory.CouponCustomRegister;
+import com.rumor.flab.coupon.application.factory.CouponRegister;
+import com.rumor.flab.coupon.application.factory.CouponRegisterFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
 class RegisterCouponServiceTest {
 
-    @Autowired
-    private RegisterCouponService registerCouponService;
-    @Autowired
-    private CouponRepository couponRepository;
-    @Autowired
-    ObjectMapper objectMapper;
+    @Test
+    void 자체제작타입의_경우_Custom_팩토리를_반환해야한다() {
+        RequestCoupon requestCoupon = new RequestCoupon(1L, "커피쿠폰", "", ImageGenerationType.CUSTOM);
+        CouponRegister couponRegister = CouponRegisterFactory.create(requestCoupon.getGenerationType());
+        Assertions.assertThat(couponRegister).isInstanceOf(CouponCustomRegister.class);
+    }
 
     @Test
-    void registerCoupon() {
-        Coupon coupon = new Coupon(1L, 1L, "커피쿠폰", "", null, null);
-        registerCouponService.registerCoupon(coupon);
+    void 자동타입의_경우_Auto_팩토리를_반환해야한다() {
+        RequestCoupon requestCoupon = new RequestCoupon(1L, "커피쿠폰", "", ImageGenerationType.AUTO);
+        CouponRegister couponRegister = CouponRegisterFactory.create(requestCoupon.getGenerationType());
+        Assertions.assertThat(couponRegister).isInstanceOf(CouponAutoRegister.class);
+    }
 
-        List<CouponEntity> coupons = couponRepository.findAll();
-        CouponEntity responseCoupon = objectMapper.convertValue(coupon, CouponEntity.class);
-        Assertions.assertThat(coupons.contains(responseCoupon)).isTrue();
+    @Test
+    void couponRegisterFactory는_ImageGenerationType만_받을_수_있어야_한다() {
+        Assertions.assertThatThrownBy(() -> {
+           // CouponRegister couponRegister = CouponRegisterFactory.create("2");
+        });
     }
 }
