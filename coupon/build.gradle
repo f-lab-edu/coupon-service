@@ -31,6 +31,9 @@ dependencies {
 
     // Object Mapper
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+
+    // Google Oauth
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {

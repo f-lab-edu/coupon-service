@@ -8,6 +8,9 @@ build/
 ### DB ###
 application-db.properties
 
+## Oauth ##
+application-oauth.properties
+
 ### STS ###
 .apt_generated
 .classpath
