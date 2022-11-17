@@ -1,29 +1,26 @@
-package com.rumor.flab.coupon.domain;
+package com.rumor.flab.coupon.adapter.in.web;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-@NoArgsConstructor
+@Getter
 @EqualsAndHashCode
-@ToString
-public class Coupon {
+@NoArgsConstructor
+public class ResponseCoupon {
+
     private Long id;
     private Long owner;
     private String name;
     private String image;
-    private LocalDate created;
-    private LocalDate updated;
 
-    public Coupon(Long id, Long owner, String name, String image, LocalDate created, LocalDate updated) {
+    public ResponseCoupon(Long id, Long owner, String name, String image) {
         this.id = id;
         this.owner = owner;
         this.name = name;
         this.image = image;
-        this.created = created;
-        this.updated = updated;
     }
 }
