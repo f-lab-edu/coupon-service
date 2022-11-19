@@ -1,4 +1,4 @@
-package com.rumor.flab.coupon;
+package com.rumor.flab;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

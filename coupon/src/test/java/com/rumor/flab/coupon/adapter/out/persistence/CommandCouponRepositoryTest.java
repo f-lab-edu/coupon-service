@@ -24,7 +24,6 @@ class CommandCouponRepositoryTest {
         Coupon coupon = new Coupon(1L, 1L, "test", "", LocalDate.now(), LocalDate.now());
         CouponEntity couponEntity = objectMapper.convertValue(coupon, CouponEntity.class);
         CouponEntity savedCoupon = couponSpringDataJpaRepository.save(couponEntity);
-
         Assertions.assertThat(couponEntity).isEqualTo(savedCoupon);
     }
 }

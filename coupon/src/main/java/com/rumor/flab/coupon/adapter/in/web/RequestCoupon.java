@@ -1,10 +1,11 @@
 package com.rumor.flab.coupon.adapter.in.web;
 
 import com.rumor.flab.coupon.adapter.in.web.enums.ImageGenerationType;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @NoArgsConstructor
+@Getter
 public class RequestCoupon {
     private Long owner;
     private String name;
