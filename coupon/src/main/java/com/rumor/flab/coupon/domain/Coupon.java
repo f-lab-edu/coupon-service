@@ -18,6 +18,12 @@ public class Coupon {
     private LocalDate created;
     private LocalDate updated;
 
+    public Coupon(Long owner, String name, String image) {
+        this.owner = owner;
+        this.name = name;
+        this.image = image;
+    }
+
     public Coupon(Long id, Long owner, String name, String image, LocalDate created, LocalDate updated) {
         this.id = id;
         this.owner = owner;
@@ -25,5 +31,9 @@ public class Coupon {
         this.image = image;
         this.created = created;
         this.updated = updated;
+    }
+
+    public Long getOwner() {
+        return owner;
     }
 }

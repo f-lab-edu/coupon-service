@@ -16,7 +16,7 @@ public class CouponCustomRegister implements CouponRegister {
 
     @Override
     public Coupon register(RequestCoupon requestCoupon) {
-        return objectMapper.convertValue(requestCoupon, Coupon.class);
+        return new Coupon(requestCoupon.getOwner(), requestCoupon.getName(), requestCoupon.getImage());
 
     }
 }
