@@ -2,7 +2,9 @@ package com.rumor.flab.coupon.application.factory;
 
 import com.rumor.flab.coupon.adapter.in.web.RequestCoupon;
 import com.rumor.flab.coupon.domain.Coupon;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CouponAutoRegister implements CouponRegister {
 
     @Override

@@ -2,16 +2,23 @@ package com.rumor.flab.coupon.application.factory;
 
 import com.rumor.flab.coupon.adapter.in.web.enums.ImageGenerationType;
 import com.rumor.flab.coupon.application.exception.NotFoundRegisterTypeException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
+@RequiredArgsConstructor
 public class CouponRegisterFactory {
 
-    public static CouponRegister create(ImageGenerationType generationType) {
+    private final CouponRegister couponCustomRegister;
+    private final CouponRegister couponAutoRegister;
+
+    public CouponRegister create(ImageGenerationType generationType) {
         if (ImageGenerationType.AUTO == generationType) {
-            return new CouponAutoRegister();
+            return couponAutoRegister;
         }
 
         if (ImageGenerationType.CUSTOM == generationType) {
-            return new CouponCustomRegister();
+            return couponCustomRegister;
         }
 
         // TODO: 어차피 ImageGenerationType만 받을 수 있다.

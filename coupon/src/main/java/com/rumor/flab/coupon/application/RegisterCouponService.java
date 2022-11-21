@@ -14,10 +14,11 @@ import org.springframework.stereotype.Service;
 public class RegisterCouponService implements RegisterCouponUseCase {
 
     private final RegisterCouponPort registerCouponPort;
+    private final CouponRegisterFactory couponRegisterFactory;
 
     @Override
     public Coupon registerCoupon(RequestCoupon requestCoupon) {
-        CouponRegister couponRegister = CouponRegisterFactory.create(requestCoupon.getGenerationType());
+        CouponRegister couponRegister = couponRegisterFactory.create(requestCoupon.getGenerationType());
         Coupon coupon = couponRegister.register(requestCoupon);
         return registerCouponPort.registerCoupon(coupon);
     }
