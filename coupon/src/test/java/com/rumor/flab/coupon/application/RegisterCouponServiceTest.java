@@ -7,7 +7,9 @@ import com.rumor.flab.coupon.application.factory.CouponAutoRegister;
 import com.rumor.flab.coupon.application.factory.CouponCustomRegister;
 import com.rumor.flab.coupon.application.factory.CouponRegister;
 import com.rumor.flab.coupon.application.factory.CouponRegisterFactory;
+import com.rumor.flab.coupon.domain.Coupon;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,20 @@ class RegisterCouponServiceTest {
         CouponRegister couponRegister = couponRegisterFactory.create(requestCoupon.getGenerationType());
         Assertions.assertThat(couponRegister).isInstanceOf(CouponCustomRegister.class);
     }
-
     @Test
     void 자동타입의_경우_Auto_팩토리를_반환해야한다() {
         RequestCoupon requestCoupon = new RequestCoupon(1L, "커피쿠폰", "", ImageGenerationType.AUTO);
         CouponRegister couponRegister = couponRegisterFactory.create(requestCoupon.getGenerationType());
         Assertions.assertThat(couponRegister).isInstanceOf(CouponAutoRegister.class);
     }
+
+    @Test
+    @DisplayName("쿠폰이 제대로 반환 되는지?")
+    void register() {
+        RequestCoupon requestCoupon = new RequestCoupon(1L, "커피쿠폰", "", ImageGenerationType.CUSTOM);
+        CouponRegister couponRegister = couponRegisterFactory.create(requestCoupon.getGenerationType());
+        Coupon coupon = couponRegister.register(requestCoupon);
+        Assertions.assertThat(coupon.getOwner()).isEqualTo(requestCoupon.getOwner());
+    }
+
 }
