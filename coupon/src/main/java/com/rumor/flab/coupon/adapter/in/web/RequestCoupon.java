@@ -18,8 +18,4 @@ public class RequestCoupon {
         this.image = image;
         this.generationType = generationType;
     }
-
-    public ImageGenerationType getGenerationType() {
-        return generationType;
-    }
 }
