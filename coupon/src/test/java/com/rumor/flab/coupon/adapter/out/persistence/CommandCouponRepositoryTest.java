@@ -1,11 +1,14 @@
 package com.rumor.flab.coupon.adapter.out.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rumor.flab.CouponApplication;
+import com.rumor.flab.CouponConfiguration;
 import com.rumor.flab.coupon.domain.Coupon;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
 
