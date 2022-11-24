@@ -1,6 +1,8 @@
 package com.rumor.flab.coupon.application;
 
-import com.rumor.flab.coupon.adapter.out.persistence.CouponEntity;
+import com.rumor.flab.coupon.adapter.in.web.RequestCoupon;
+import com.rumor.flab.coupon.application.factory.CouponRegister;
+import com.rumor.flab.coupon.application.factory.CouponRegisterFactory;
 import com.rumor.flab.coupon.application.port.in.RegisterCouponUseCase;
 import com.rumor.flab.coupon.application.port.out.RegisterCouponPort;
 import com.rumor.flab.coupon.domain.Coupon;
@@ -12,9 +14,12 @@ import org.springframework.stereotype.Service;
 public class RegisterCouponService implements RegisterCouponUseCase {
 
     private final RegisterCouponPort registerCouponPort;
+    private final CouponRegisterFactory couponRegisterFactory;
 
     @Override
-    public Coupon registerCoupon(Coupon coupon) {
+    public Coupon registerCoupon(RequestCoupon requestCoupon) {
+        CouponRegister couponRegister = couponRegisterFactory.create(requestCoupon.getGenerationType());
+        Coupon coupon = couponRegister.register(requestCoupon);
         return registerCouponPort.registerCoupon(coupon);
     }
 }
