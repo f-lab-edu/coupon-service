@@ -5,11 +5,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FaceBookOauthHandler implements SocialProviderHandler {
-
     @Override
-    public SocialUser oauthLogin() {
+    public SocialUser oauthLogin(String credential) {
         return null;
     }
-
 
 }
