@@ -1,7 +1,6 @@
-package com.rumor.flab.user.domain;
+package com.rumor.flab.user.application.dto;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 public class GoogleUser implements SocialUser {

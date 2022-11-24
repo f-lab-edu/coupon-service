@@ -5,8 +5,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.rumor.flab.user.application.exception.GoogleOauthNotFoundUser;
-import com.rumor.flab.user.domain.GoogleUser;
-import com.rumor.flab.user.domain.SocialUser;
+import com.rumor.flab.user.application.dto.GoogleUser;
+import com.rumor.flab.user.application.dto.SocialUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ import java.util.Collections;
 public class GoogleOauthHandler implements SocialProviderHandler  {
 
     @Value("${oauth.google.client.id}")
-    private final String CLIENT_ID;
+    private String CLIENT_ID;
 
     @Override
     public SocialUser oauthLogin(String credential) {
