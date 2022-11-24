@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SocialService {
 
-    SocialProviderHandlerFactory socialProviderHandlerFactory;
+    private final SocialProviderHandlerFactory socialProviderHandlerFactory;
 
     public void login(SocialType socialType, String credential) {
         SocialProviderHandler handler = socialProviderHandlerFactory.findHandler(socialType);
