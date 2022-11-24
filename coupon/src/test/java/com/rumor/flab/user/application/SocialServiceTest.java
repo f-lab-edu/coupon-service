@@ -39,6 +39,5 @@ public class SocialServiceTest {
 
         SocialProviderHandler appleHandler = socialProviderHandlerFactory.findHandler(SocialType.APPLE);
         assertThat(appleHandler).isInstanceOf(AppleOauthHandler.class);
-
     }
 }

@@ -1,6 +1,6 @@
 package com.rumor.flab.user.application.handler;
 
-import com.rumor.flab.user.domain.SocialUser;
+import com.rumor.flab.user.application.dto.SocialUser;
 import org.springframework.stereotype.Component;
 
 @Component
