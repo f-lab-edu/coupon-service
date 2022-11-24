@@ -13,7 +13,7 @@ public class CommandUserController {
 
     private final SocialService socialService;
 
-    // NOTE: 각 소셜마다 로그인시 주어지는 파라미터가 다를 수 있음!
+    // TODO: 각 소셜마다 로그인시 주어지는 파라미터가 다를 수 있음!
     @PostMapping("/user/google/login")
     public void login(@RequestParam String credential) {
         socialService.login(SocialType.GOOGLE, credential);
