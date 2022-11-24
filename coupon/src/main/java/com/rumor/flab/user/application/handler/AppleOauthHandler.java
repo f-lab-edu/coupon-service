@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppleOauthHandler implements SocialProviderHandler {
     @Override
-    public SocialUser oauthLogin() {
+    public SocialUser oauthLogin(String credential) {
         return null;
     }
 }
