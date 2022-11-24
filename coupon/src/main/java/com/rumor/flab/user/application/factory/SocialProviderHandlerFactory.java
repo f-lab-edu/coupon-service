@@ -5,6 +5,7 @@ import com.rumor.flab.user.application.handler.AppleOauthHandler;
 import com.rumor.flab.user.application.handler.FaceBookOauthHandler;
 import com.rumor.flab.user.application.handler.GoogleOauthHandler;
 import com.rumor.flab.user.application.handler.SocialProviderHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -19,6 +20,13 @@ public class SocialProviderHandlerFactory {
     private AppleOauthHandler appleOauthHandler;
 
     public SocialProviderHandlerFactory(GoogleOauthHandler googleOauthHandler, FaceBookOauthHandler faceBookOauthHandler, AppleOauthHandler appleOauthHandler) {
+        this.googleOauthHandler = googleOauthHandler;
+        this.faceBookOauthHandler = faceBookOauthHandler;
+        this.appleOauthHandler = appleOauthHandler;
+        mappingHandler();
+    }
+
+    private void mappingHandler() {
         socialHandlerMap.put(SocialType.GOOGLE, googleOauthHandler);
         socialHandlerMap.put(SocialType.FACEBOOK, faceBookOauthHandler);
         socialHandlerMap.put(SocialType.APPLE, appleOauthHandler);
