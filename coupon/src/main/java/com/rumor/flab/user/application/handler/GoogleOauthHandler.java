@@ -1,19 +1,29 @@
 package com.rumor.flab.user.application.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.google.api.client.auth.openidconnect.IdTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+import com.rumor.flab.user.application.dto.GoogleTokenRequest;
+import com.rumor.flab.user.application.dto.GoogleTokenResponse;
 import com.rumor.flab.user.application.exception.GoogleOauthNotFoundUser;
 import com.rumor.flab.user.application.dto.GoogleUser;
 import com.rumor.flab.user.application.dto.SocialUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -22,22 +32,53 @@ public class GoogleOauthHandler implements SocialProviderHandler  {
     @Value("${oauth.google.client.id}")
     private String CLIENT_ID;
 
+    @Value("${oauth.google.client.secret}")
+    private String CLIENT_SECRET;
+
+    @Value("${oauth.google.redirect.uri}")
+    private String REDIRECT_URI;
+
+    @Value("${oauth.google.api.url}")
+    private String GOOGLE_OAUTH_BASE_URL;
+
+    private final RestTemplate restTemplate;
+
+    private final ObjectMapper snakeCaseObjectMapper;
+
     @Override
     public SocialUser oauthLogin(String credential) {
         try {
-            SocialUser socialUser = verify(credential);
+            GoogleTokenResponse token = requestAccessToken(credential);
+            SocialUser socialUser = verify(token);
             return socialUser;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Google Oauth Error");
         }
     }
 
-    private SocialUser verify(String credential) throws GeneralSecurityException, IOException {
+    private GoogleTokenResponse requestAccessToken(String code) throws JsonProcessingException {
+        GoogleTokenRequest googleTokenRequest = new GoogleTokenRequest(code, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, "authorization_code");
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<GoogleTokenRequest> googleTokenRequestHttpEntity = new HttpEntity<>(googleTokenRequest, httpHeaders);
+        ResponseEntity<String> response = restTemplate.postForEntity(GOOGLE_OAUTH_BASE_URL, googleTokenRequestHttpEntity, String.class);
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return snakeCaseObjectMapper.readValue(response.getBody(), GoogleTokenResponse.class);
+        }
+
+        return null;
+    }
+
+    private SocialUser verify(GoogleTokenResponse googleTokenResponse) throws GeneralSecurityException, IOException {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
                 .setAudience(Collections.singleton(CLIENT_ID))
                 .build();
 
-        GoogleIdToken idToken = verifier.verify(credential);
+        GoogleIdToken idToken = GoogleIdToken.parse(verifier.getJsonFactory(), googleTokenResponse.getIdToken());
+//        GoogleIdToken idToken = verifier.verify(googleTokenResponse.getAccessToken());
 
         if (idToken == null) {
             throw new GoogleOauthNotFoundUser("해당 토큰으로 유저를 찾을 수 없음");
