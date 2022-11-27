@@ -78,7 +78,6 @@ public class GoogleOauthHandler implements SocialProviderHandler  {
                 .build();
 
         GoogleIdToken idToken = GoogleIdToken.parse(verifier.getJsonFactory(), googleTokenResponse.getIdToken());
-//        GoogleIdToken idToken = verifier.verify(googleTokenResponse.getAccessToken());
 
         if (idToken == null) {
             throw new GoogleOauthNotFoundUser("해당 토큰으로 유저를 찾을 수 없음");
@@ -88,7 +87,8 @@ public class GoogleOauthHandler implements SocialProviderHandler  {
 
         String userId = payload.getSubject();
         String email = payload.getEmail();
+        String locale = (String) payload.get("locale");
 
-        return new GoogleUser(userId, email);
+        return new GoogleUser(userId, email, locale);
     }
 }

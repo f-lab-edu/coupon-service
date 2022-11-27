@@ -16,6 +16,11 @@ public class CommandUserRepository implements RegisterUserPort {
     @Override
     public User registerUser(User user) {
         UserEntity userEntity = objectMapper.convertValue(user, UserEntity.class);
-        return objectMapper.convertValue(userSpringDataJpaRepository.save(userEntity), User.class);
+
+        if (userEntity != null) {
+            return objectMapper.convertValue(userSpringDataJpaRepository.save(userEntity), User.class);
+        }
+
+        return null;
     }
 }
