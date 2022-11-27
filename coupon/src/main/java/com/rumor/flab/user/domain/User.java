@@ -1,7 +1,10 @@
 package com.rumor.flab.user.domain;
 
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
+@NoArgsConstructor
 public class User {
     private Long id;
     private String email;

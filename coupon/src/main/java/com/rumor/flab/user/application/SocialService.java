@@ -27,7 +27,7 @@ public class SocialService implements SocialLoginUserCase {
         User foundUser = findUserPort.findByEmail(socialUser.getEmail());
 
         if (foundUser == null) {
-            User user = new User(socialUser.getEmail(), "", "");
+            User user = new User(socialUser.getEmail(), "", socialUser.getLocale());
             registerUserPort.registerUser(user);
             return user;
         }

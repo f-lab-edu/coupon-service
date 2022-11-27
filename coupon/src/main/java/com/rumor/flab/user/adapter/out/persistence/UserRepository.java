@@ -16,6 +16,11 @@ public class UserRepository implements FindUserPort {
     @Override
     public User findByEmail(String email) {
         UserEntity userEntity = userSpringDataJpaRepository.findByEmail(email);
-        return objectMapper.convertValue(userEntity, User.class);
+
+        if (userEntity != null) {
+            return objectMapper.convertValue(userEntity, User.class);
+        }
+
+        return null;
     }
 }
