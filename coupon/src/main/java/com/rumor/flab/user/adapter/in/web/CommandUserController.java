@@ -59,8 +59,10 @@ public class CommandUserController {
     }
 
     @GetMapping("/user/kakao/login")
-    public String kakaoLogin(@RequestParam String code) {
-        User user = socialLoginUserCase.login(SocialType.GOOGLE, code);
-        return null;
+    public String kakaoLogin(@RequestParam String code, HttpServletRequest request) {
+        User user = socialLoginUserCase.login(SocialType.KAKAO, code);
+        HttpSession session = request.getSession();
+        session.setAttribute("user", user);
+        return "redirect:/?referrer=login";
     }
 }

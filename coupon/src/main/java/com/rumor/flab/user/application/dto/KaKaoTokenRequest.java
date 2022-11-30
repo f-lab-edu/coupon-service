@@ -1,5 +1,8 @@
 package com.rumor.flab.user.application.dto;
 
+import lombok.Getter;
+
+@Getter
 public class KaKaoTokenRequest {
     private String code;
     private String clientId;
