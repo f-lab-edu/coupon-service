@@ -8,6 +8,7 @@ build/
 
 ### DB ###
 application-db.properties
+application-oauth.properties
 
 ### STS ###
 .apt_generated
