@@ -46,9 +46,9 @@ public class GoogleOauthHandler implements SocialProviderHandler  {
     private final ObjectMapper snakeCaseObjectMapper;
 
     @Override
-    public SocialUser oauthLogin(String credential) {
+    public SocialUser oauthLogin(String code) {
         try {
-            GoogleTokenResponse token = requestAccessToken(credential);
+            GoogleTokenResponse token = requestAccessToken(code);
             SocialUser socialUser = verify(token);
             return socialUser;
         } catch (Exception e) {

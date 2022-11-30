@@ -21,8 +21,11 @@ public class CommandUserController {
 
     private final SocialLoginUserCase socialLoginUserCase;
 
-    @Value("${oauth.google.account.url}")
+    @Value("${oauth.google.authentication.url}")
     private String GOOGLE_ACCOUNT_URL;
+
+    @Value("${oauth.kakao.authentication.url}")
+    private String KAKAO_ACCOUNT_URL;
 
     @GetMapping("/user/google/authentication")
     public String googleAuthentication(HttpSession session) {
@@ -41,5 +44,23 @@ public class CommandUserController {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         return "redirect:/?referrer=login";
+    }
+
+    // TODO: authentication 중복 제거 가능할 듯
+    @GetMapping("/user/kakao/authentication")
+    public String kakaoAuthentication(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+
+        if (user != null) {
+            return "redirect:/?referrer=authentication";
+        }
+
+        return "redirect:" + KAKAO_ACCOUNT_URL;
+    }
+
+    @GetMapping("/user/kakao/login")
+    public String kakaoLogin(@RequestParam String code) {
+        User user = socialLoginUserCase.login(SocialType.GOOGLE, code);
+        return null;
     }
 }
