@@ -6,6 +6,8 @@ import com.rumor.flab.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepository implements FindUserPort {
@@ -14,13 +16,9 @@ public class UserRepository implements FindUserPort {
     private final UserSpringDataJpaRepository userSpringDataJpaRepository;
 
     @Override
-    public User findByEmail(String email) {
-        UserEntity userEntity = userSpringDataJpaRepository.findByEmail(email);
+    public Optional<User> findByEmail(String email) {
+        Optional<UserEntity> userEntity = userSpringDataJpaRepository.findByEmail(email);
+        return Optional.ofNullable(objectMapper.convertValue(userEntity.get(), User.class));
 
-        if (userEntity != null) {
-            return objectMapper.convertValue(userEntity, User.class);
-        }
-
-        return null;
     }
 }
