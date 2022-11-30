@@ -11,6 +11,8 @@ import com.rumor.flab.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class SocialService implements SocialLoginUserCase {
@@ -24,15 +26,15 @@ public class SocialService implements SocialLoginUserCase {
         SocialProviderHandler handler = socialProviderHandlerFactory.findHandler(socialType);
         SocialUser socialUser = handler.oauthLogin(code);
 
-        User foundUser = findUserPort.findByEmail(socialUser.getEmail());
+        Optional<User> foundUser = findUserPort.findByEmail(socialUser.getEmail());
 
-        if (foundUser == null) {
+        if (!foundUser.isPresent()) {
             User user = new User(socialUser.getEmail(), "", socialUser.getLocale());
             registerUserPort.registerUser(user);
             return user;
         }
 
-        return foundUser;
+        return foundUser.get();
     }
 
 }

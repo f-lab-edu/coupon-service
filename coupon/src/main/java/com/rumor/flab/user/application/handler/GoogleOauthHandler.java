@@ -48,11 +48,10 @@ public class GoogleOauthHandler implements SocialProviderHandler  {
     @Override
     public SocialUser oauthLogin(String credential) {
         try {
-            GoogleTokenResponse token = requestAccessToken(credential);
-            SocialUser socialUser = verify(token);
+            GoogleTokenResponse googleTokenResponse = requestAccessToken(credential);
+            SocialUser socialUser = verify(googleTokenResponse);
             return socialUser;
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException("Google Oauth Error");
         }
     }
@@ -72,7 +71,11 @@ public class GoogleOauthHandler implements SocialProviderHandler  {
         return null;
     }
 
-    private SocialUser verify(GoogleTokenResponse googleTokenResponse) throws GeneralSecurityException, IOException {
+    private SocialUser verify(GoogleTokenResponse googleTokenResponse) throws IOException {
+        if (googleTokenResponse == null) {
+            throw new RuntimeException("토큰이 존재하지 않습니다");
+        }
+
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
                 .setAudience(Collections.singleton(CLIENT_ID))
                 .build();
