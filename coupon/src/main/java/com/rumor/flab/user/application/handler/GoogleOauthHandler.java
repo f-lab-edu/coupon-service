@@ -26,24 +26,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@RequiredArgsConstructor
 public class GoogleOauthHandler implements SocialProviderHandler  {
 
-    @Value("${oauth.google.client.id}")
-    private String CLIENT_ID;
-
-    @Value("${oauth.google.client.secret}")
-    private String CLIENT_SECRET;
-
-    @Value("${oauth.google.redirect.uri}")
-    private String REDIRECT_URI;
-
-    @Value("${oauth.google.api.url}")
-    private String GOOGLE_OAUTH_BASE_URL;
-
+    private final String CLIENT_ID;
+    private final String CLIENT_SECRET;
+    private final String REDIRECT_URI;
+    private final String GOOGLE_OAUTH_BASE_URL;
     private final RestTemplate restTemplate;
-
     private final ObjectMapper snakeCaseObjectMapper;
+
+    public GoogleOauthHandler(@Value("${oauth.google.client.id}") String CLIENT_ID,
+                              @Value("${oauth.google.client.secret}") String CLIENT_SECRET,
+                              @Value("${oauth.google.redirect.uri}") String REDIRECT_URI,
+                              @Value("${oauth.google.api.url}") String GOOGLE_OAUTH_BASE_URL,
+                              RestTemplate restTemplate, ObjectMapper snakeCaseObjectMapper) {
+        this.CLIENT_ID = CLIENT_ID;
+        this.CLIENT_SECRET = CLIENT_SECRET;
+        this.REDIRECT_URI = REDIRECT_URI;
+        this.GOOGLE_OAUTH_BASE_URL = GOOGLE_OAUTH_BASE_URL;
+        this.restTemplate = restTemplate;
+        this.snakeCaseObjectMapper = snakeCaseObjectMapper;
+    }
 
     @Override
     public SocialUser oauthLogin(String credential) {
