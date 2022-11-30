@@ -21,7 +21,7 @@ public class CommandUserController {
 
     private final SocialLoginUserCase socialLoginUserCase;
 
-    @Value("${oauth.google.account.url}")
+    @Value("${oauth.google.authentication.url}")
     private String GOOGLE_ACCOUNT_URL;
 
     @GetMapping("/user/google/authentication")

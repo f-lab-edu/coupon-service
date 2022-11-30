@@ -14,6 +14,7 @@ import com.rumor.flab.user.application.exception.GoogleOauthNotFoundUser;
 import com.rumor.flab.user.application.dto.GoogleUser;
 import com.rumor.flab.user.application.dto.SocialUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,7 @@ public class GoogleOauthHandler implements SocialProviderHandler  {
     private final RestTemplate restTemplate;
     private final ObjectMapper snakeCaseObjectMapper;
 
+    @Autowired
     public GoogleOauthHandler(@Value("${oauth.google.client.id}") String CLIENT_ID,
                               @Value("${oauth.google.client.secret}") String CLIENT_SECRET,
                               @Value("${oauth.google.redirect.uri}") String REDIRECT_URI,
